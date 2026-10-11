@@ -124,6 +124,7 @@ flutter test test/cloud_sync_service_test.dart test/netcatty_crypto_test.dart te
 | `host_editor_layout_test.dart` | 键盘弹出、滚动和窄屏表单布局 |
 | `terminal_connection_dialog_test.dart` | Pending 标签、连接弹窗和会话隔离 |
 | `terminal_input_controller_test.dart` | 软键盘输入、iOS 回车重复上报折叠与工具栏修饰键 |
+| `ssh_identity_test.dart` | 主机私钥装配、空口令归一化与私钥类型识别 |
 | `sftp_terminal_usability_test.dart` | SFTP 递归传输、进度、零拷贝、快捷键与 PiP 文本 |
 | `system_management_service_test.dart` | 进程、Docker、Compose、服务、Caddy、tmux 命令与解析 |
 | `mobile_v1_features_test.dart` | 关键移动端功能回归 |
