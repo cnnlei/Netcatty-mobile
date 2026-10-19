@@ -70,6 +70,7 @@ Netcatty-mobile/
 | 文件 | 职责 |
 | --- | --- |
 | `ssh/ssh_service.dart` | SSH/Telnet 连接、认证、主机指纹、代理、跳板机、Shell 和端口转发底层 |
+| `ssh/ssh_identity.dart` | 主机身份的私钥装配、空口令归一化与私钥类型识别 |
 | `ssh/terminal_input_filter.dart` | 终端输出管线：工具栏一次性修饰状态与 iOS 软键盘回车重复上报的折叠 |
 | `ssh/server_monitor_service.dart` | 系统识别与 CPU/内存/磁盘/网络/负载采集 |
 | `ssh/sftp_service.dart` | `FileTransferService`、远程/本地文件实现、递归传输、进度和 iOS 有界并发 |
@@ -205,6 +206,7 @@ assets/
 - GitHub Device Flow
 - GitHub Release 更新检查与版本比较
 - 主机编辑器和终端连接 UI
+- 主机私钥装配、空口令归一化与私钥类型识别
 - SFTP/快捷键/PiP 可用性
 - 系统管理命令与解析
 - Vault 导出

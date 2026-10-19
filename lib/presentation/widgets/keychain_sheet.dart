@@ -9,6 +9,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../application/vault_controller.dart';
 import '../../domain/models/host.dart';
+import '../../infrastructure/ssh/ssh_identity.dart';
 
 class KeychainSheet extends ConsumerWidget {
   const KeychainSheet({super.key});
@@ -115,20 +116,26 @@ class KeychainSheet extends ConsumerWidget {
         ),
         actions: [
           FilledButton(
-            onPressed: () => Navigator.pop(
-              context,
-              SshKeyProfile({
-                'id': const Uuid().v4(),
-                'label': label.text.trim(),
-                'type': 'ED25519',
-                'privateKey': privateKey,
-                'passphrase': passphrase.text,
-                'savePassphrase': true,
-                'source': 'imported',
-                'category': 'key',
-                'created': DateTime.now().millisecondsSinceEpoch,
-              }),
-            ),
+            onPressed: () {
+              final passphraseText = passphrase.text;
+              Navigator.pop(
+                context,
+                SshKeyProfile({
+                  'id': const Uuid().v4(),
+                  'label': label.text.trim(),
+                  'type': detectPrivateKeyType(privateKey) ?? 'OpenSSH / PEM',
+                  'privateKey': privateKey,
+                  // An empty optional field must not be persisted as '': the
+                  // SSH client rejects any passphrase argument for a key that
+                  // turns out to be unencrypted.
+                  if (passphraseText.isNotEmpty) 'passphrase': passphraseText,
+                  if (passphraseText.isNotEmpty) 'savePassphrase': true,
+                  'source': 'imported',
+                  'category': 'key',
+                  'created': DateTime.now().millisecondsSinceEpoch,
+                }),
+              );
+            },
             child: const LText('导入'),
           ),
         ],

@@ -9,6 +9,7 @@ import 'package:xterm2/xterm.dart';
 import '../../domain/models/host.dart';
 import '../../domain/models/server_stats.dart';
 import 'server_monitor_service.dart';
+import 'ssh_identity.dart';
 import 'terminal_input_filter.dart';
 
 typedef HostKeyVerifier = Future<bool> Function(
@@ -271,13 +272,7 @@ class SshService {
     HostKeyVerifier verifyHostKey,
     KeyboardInteractiveHandler? keyboardInteractive,
   ) {
-    final identity = keys.cast<SshKeyProfile?>().firstWhere(
-          (value) => value?.id == host.identityFileId,
-          orElse: () => null,
-        );
-    final identities = identity == null || identity.privateKey.isEmpty
-        ? null
-        : SSHKeyPair.fromPem(identity.privateKey, identity.passphrase);
+    final identities = buildHostIdentities(host, keys);
     return SSHClient(
       socket,
       username: host.username,
